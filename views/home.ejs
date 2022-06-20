@@ -18,7 +18,11 @@
   
       <div id="post-list-container">
         <ul>
-          <%- include('_post') -%>
+          <% for(post of posts){ %>
+                        
+            <%- include('_post') -%>
+                
+            <%} %>
         </ul>
       </div>
 
