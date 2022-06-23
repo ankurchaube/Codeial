@@ -27,6 +27,8 @@ app.use(sassMiddleware({
 
 }))
 app.use(express.urlencoded());
+// Make Uploads Path Avail to browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use(cookieParser());
 

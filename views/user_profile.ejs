@@ -1,11 +1,6 @@
 <link rel="stylesheet" href="/css/user_profile.css">
-<div id="profile"> 
-        <h1>Codeial / <%= title%></h1>
 
-        <p>Name: <%= profile_user.name %></p>
-        <p>Email: <%= profile_user.email %></p>
-        
-</div>
+<img src="<%= user.avtar %>" alt="<%= user.name %>" width="100">
 
   
 <% if(user.id == profile_user.id) { %>
