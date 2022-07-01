@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const Like = require("../models/like");
 
 module.exports.create = async function (req, res) {
   try {
@@ -8,19 +9,19 @@ module.exports.create = async function (req, res) {
       user: req.user._id,
     });
 
-    if(req.xhr){
+    if (req.xhr) {
       return res.status(200).json({
         data: {
-          post: post
+          post: post,
         },
-        message: "Post Created"
-      })
+        message: "Post Created",
+      });
     }
 
-    req.flash('success', 'Post Published !');
+    req.flash("success", "Post Published !");
     return res.redirect("back");
   } catch (err) {
-    req.flash('error', err);
+    req.flash("error", err);
     return res.redirect("back");
   }
 };
@@ -29,27 +30,31 @@ module.exports.destroy = async function (req, res) {
   try {
     let post = await Post.findById(req.params.id);
     if (post.user == req.user.id) {
+      // CHANGE :: delete the associated likes for the post and all its comments' likes too
+      await Like.deleteMany({ likeable: post, onModel: "Post" });
+      await Like.deleteMany({ _id: { $in: post.comments } });
+
       post.remove();
 
       await Comment.deleteMany({ post: req.params.id });
 
-      if(req.xhr){
+      if (req.xhr) {
         return res.status(200).json({
           data: {
-            post_id: req.params.id
+            post_id: req.params.id,
           },
-          message: "Post deleted successfully"
-        })
+          message: "Post deleted successfully",
+        });
       }
 
-      req.flash('success', 'Post Deleted !');
+      req.flash("success", "Post Deleted !");
       return res.redirect("back");
     } else {
-      req.flash('error', 'You Cannot Delete This Post ');
+      req.flash("error", "You Cannot Delete This Post ");
       return res.redirect("back");
     }
   } catch (err) {
-    req.flash('error', err);
+    req.flash("error", err);
     return res.redirect("back");
   }
 };

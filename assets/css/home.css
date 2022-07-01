@@ -1,9 +1,9 @@
-#home-cantainer {
+#home {
   display: flex; }
-  #home-cantainer #feeds-post {
+  #home #feeds-posts {
     width: 70%;
     padding: 10px; }
-  #home-cantainer #user-friends {
+  #home .user-friends {
     width: 30%;
     padding: 10px;
     border-left: 1px solid grey;
