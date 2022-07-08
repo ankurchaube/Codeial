@@ -22,9 +22,18 @@ const userSchema = new mongoose.Schema({
     
     avtar: {
         type: String
-    }
+    },
     
-}, {
+    friendships: [
+        { 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Friendship' 
+        }
+    ]
+
+    
+},
+{
     timestamps: true
 });
 

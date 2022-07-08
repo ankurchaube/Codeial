@@ -6,7 +6,7 @@ const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 
-//! passport
+// passport
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
@@ -18,6 +18,14 @@ const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+// setup for chat server
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log("Chat server is running on port 5000");
+
+
+
 
 
 app.use(sassMiddleware({
